@@ -1,7 +1,8 @@
 sudo apt update
 sudo apt upgrade
 
-sudo apt install blueman
+sudo apt install -y ranger blueman
+
 blueman-applet
 
 mkdir ~/.config/i3status
