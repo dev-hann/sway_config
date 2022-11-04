@@ -1,7 +1,7 @@
 sudo apt update
 sudo apt upgrade
 
-sudo apt install -y ranger blueman
+sudo apt install -y ranger blueman ibus-hangul ibus-pinyin
 
 blueman-applet
 
