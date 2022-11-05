@@ -1,7 +1,7 @@
 sudo apt update
 sudo apt upgrade
 
-sudo apt install -y ranger blueman ibus-hangul ibus-pinyin
+sudo apt install -y git curl ranger blueman ibus-hangul ibus-pinyin i3lock-fancy
 
 blueman-applet
 
