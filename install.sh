@@ -9,7 +9,10 @@ sudo apt install -y \
   xdg-desktop-portal-wlr \
   waybar wofi mako-notifier fcitx5 fcitx5-hangul \
   blueman network-manager-gnome brightnessctl \
-  grim slurp wl-clipboard playerctl pavucontrol
+  grim slurp wl-clipboard playerctl pavucontrol\
+  fonts-noto-cjk fonts-nanum
+
+sudo apt remove xdg-desktop-portal-gtk
 
 # Step 2: Configure LightDM as default display manager
 sudo debconf-set-selections <<< "lightdm shared/default-x-display-manager select lightdm"
@@ -127,10 +130,6 @@ input "type:touchpad" {
   tap enabled
 }
 
-bar{
-  swaybar_command waybar
-}
-
 EOF
 
 # Step 5: Waybar config
@@ -144,23 +143,23 @@ cat > ~/.config/waybar/config <<EOF
   "modules-right": ["cpu", "memory", "battery", "tray"],
 
   "clock": {
-    "format": "🕓 {:%A, %Y-%m-%d %H:%M}",
+    "format": "{:%A, %Y-%m-%d %H:%M}",
     "tooltip-format": "%A, %d %B %Y\n%I:%M:%S %p"
   },
 
   "cpu": {
-    "format": "🧠 {usage}%",
+    "format": "CPU: {usage}%",
     "tooltip": true
   },
 
   "memory": {
-    "format": "💾 {used:0.1f}G / {total:0.1f}G",
+    "format": "MEM: {used:0.1f}G / {total:0.1f}G",
     "tooltip": true
   },
 
   "battery": {
-    "format": "🔋 {capacity}%",
-    "format-charging": "⚡ {capacity}%",
+    "format": "BAT: {capacity}%",
+    "format-charging": "BAT: {capacity}%",
     "tooltip": true
   }
 }
