@@ -7,7 +7,7 @@ sudo apt update
 sudo apt install -y \
   sway lightdm xwayland \
   xdg-desktop-portal-wlr \
-  waybar wofi mako fcitx5 fcitx5-hangul \
+  waybar wofi mako-notifier fcitx5 fcitx5-hangul \
   blueman network-manager-gnome brightnessctl \
   grim slurp wl-clipboard playerctl pavucontrol
 
