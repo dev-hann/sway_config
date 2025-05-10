@@ -126,6 +126,11 @@ input "type:touchpad" {
   natural_scroll enabled
   tap enabled
 }
+
+bar{
+  swaybar_commad waybar
+}
+
 EOF
 
 # Step 5: Waybar config
