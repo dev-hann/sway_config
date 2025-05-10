@@ -2,38 +2,34 @@
 
 set -e
 
+# Step 1: Install base packages
+sudo apt update
+sudo apt install -y \
+  sway lightdm xwayland \
+  xdg-desktop-portal-wlr \
+  waybar wofi mako fcitx5 fcitx5-hangul \
+  blueman network-manager-gnome brightnessctl \
+  grim slurp wl-clipboard playerctl pavucontrol
 
-# Sway installation and config
-echo "📦 Installing sway and related tools..."
-sudo apt install -y sway waybar wofi mako-notifier swaylock swayidle \
-  pipewire wireplumber pavucontrol brightnessctl \
-  network-manager-gnome blueman grim slurp wl-clipboard \
-  fcitx5 fcitx5-hangul fcitx5-config-qt fcitx5-frontend-gtk3 fcitx5-frontend-gtk4 \
-  fonts-noto-cjk fonts-noto-color-emoji
+# Step 2: Configure LightDM as default display manager
+sudo debconf-set-selections <<< "lightdm shared/default-x-display-manager select lightdm"
+sudo dpkg-reconfigure -f noninteractive lightdm
 
-echo "📝 Setting up environment variables for fcitx5..."
-profile_file="$HOME/.profile"
-if ! grep -q 'fcitx' "$profile_file"; then
-  echo -e "\n# Fcitx5 input method setup" >> "$profile_file"
-  echo 'export GTK_IM_MODULE=fcitx' >> "$profile_file"
-  echo 'export QT_IM_MODULE=fcitx' >> "$profile_file"
-  echo 'export XMODIFIERS="@im=fcitx"' >> "$profile_file"
-fi
+# Step 3: Set up portals preference
+mkdir -p ~/.config/xdg-desktop-portal
+echo -e "[preferred]\ndefault=wlr" > ~/.config/xdg-desktop-portal/portals.conf
 
-echo "📁 Creating config directories..."
-mkdir -p ~/.config/sway ~/.config/waybar ~/.config/mako
-
-echo "🖥️  Writing sway config..."
+# Step 4: Set up Sway config
+mkdir -p ~/.config/sway
 cat > ~/.config/sway/config <<EOF
-
 ### Sway config (customized + default behavior)
 
 # Modifier key
-set $mod Mod4
+set \$mod Mod4
 
 # Applications
-set $term alacritty
-set $menu wofi --show drun
+set \$term alacritty
+set \$menu \"wofi --show drun\"
 
 ### Startup applications
 exec waybar
@@ -52,8 +48,8 @@ exec swayidle -w \
 ### Key bindings
 
 # Launch apps
-bindsym $mod+Return exec $term
-bindsym $mod+d exec $menu
+bindsym \$mod+Return exec \$term
+bindsym \$mod+d exec \$menu
 
 # Volume control
 bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
@@ -65,60 +61,60 @@ bindsym XF86MonBrightnessUp exec brightnessctl set +10%
 bindsym XF86MonBrightnessDown exec brightnessctl set 10%-
 
 # Kill focused window
-bindsym $mod+Shift+q kill
+bindsym \$mod+Shift+q kill
 
 # Fullscreen toggle
-bindsym $mod+f fullscreen
+bindsym \$mod+f fullscreen
 
 # Focus movement (vim-style)
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
+bindsym \$mod+h focus left
+bindsym \$mod+j focus down
+bindsym \$mod+k focus up
+bindsym \$mod+l focus right
 
 # Move windows
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
+bindsym \$mod+Shift+h move left
+bindsym \$mod+Shift+j move down
+bindsym \$mod+Shift+k move up
+bindsym \$mod+Shift+l move right
 
 # Workspace switching
-bindsym $mod+1 workspace 1
-bindsym $mod+2 workspace 2
-bindsym $mod+3 workspace 3
-bindsym $mod+4 workspace 4
-bindsym $mod+5 workspace 5
-bindsym $mod+6 workspace 6
-bindsym $mod+7 workspace 7
-bindsym $mod+8 workspace 8
-bindsym $mod+9 workspace 9
+bindsym \$mod+1 workspace 1
+bindsym \$mod+2 workspace 2
+bindsym \$mod+3 workspace 3
+bindsym \$mod+4 workspace 4
+bindsym \$mod+5 workspace 5
+bindsym \$mod+6 workspace 6
+bindsym \$mod+7 workspace 7
+bindsym \$mod+8 workspace 8
+bindsym \$mod+9 workspace 9
 
 # Move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1
-bindsym $mod+Shift+2 move container to workspace 2
-bindsym $mod+Shift+3 move container to workspace 3
-bindsym $mod+Shift+4 move container to workspace 4
-bindsym $mod+Shift+5 move container to workspace 5
-bindsym $mod+Shift+6 move container to workspace 6
-bindsym $mod+Shift+7 move container to workspace 7
-bindsym $mod+Shift+8 move container to workspace 8
-bindsym $mod+Shift+9 move container to workspace 9
+bindsym \$mod+Shift+1 move container to workspace 1
+bindsym \$mod+Shift+2 move container to workspace 2
+bindsym \$mod+Shift+3 move container to workspace 3
+bindsym \$mod+Shift+4 move container to workspace 4
+bindsym \$mod+Shift+5 move container to workspace 5
+bindsym \$mod+Shift+6 move container to workspace 6
+bindsym \$mod+Shift+7 move container to workspace 7
+bindsym \$mod+Shift+8 move container to workspace 8
+bindsym \$mod+Shift+9 move container to workspace 9
 
 # Toggle floating
-bindsym $mod+Shift+space floating toggle
+bindsym \$mod+Shift+space floating toggle
 
 # Reload/Restart/Exit sway
-bindsym $mod+Shift+c reload
-bindsym $mod+Shift+r restart
-bindsym $mod+Shift+e exit
+bindsym \$mod+Shift+c reload
+bindsym \$mod+Shift+r restart
+bindsym \$mod+Shift+e exit
 
 # Change layout mode
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+bindsym \$mod+s layout stacking
+bindsym \$mod+w layout tabbed
+bindsym \$mod+e layout toggle split
 
 # Gaps (optional, sway doesn't support gaps by default unless patched)
-# bindsym $mod+g gaps inner current plus 5
+# bindsym \$mod+g gaps inner current plus 5
 
 ### Input (keyboard, touchpad, etc.)
 input type:keyboard {
@@ -130,18 +126,17 @@ input "type:touchpad" {
   natural_scroll enabled
   tap enabled
 }
-
-
 EOF
 
-echo "📦 Writing waybar config..."
+# Step 5: Waybar config
+mkdir -p ~/.config/waybar
 cat > ~/.config/waybar/config <<EOF
 {
   "layer": "top",
   "position": "top",
   "height": 30,
   "modules-center": ["clock"],
-  "modules-right": ["cpu", "memory", "battery","tray"],
+  "modules-right": ["cpu", "memory", "battery", "tray"],
 
   "clock": {
     "format": "🕓 {:%A, %Y-%m-%d %H:%M}",
@@ -166,7 +161,6 @@ cat > ~/.config/waybar/config <<EOF
 }
 EOF
 
-echo "🎨 Writing waybar style.css..."
 cat > ~/.config/waybar/style.css <<EOF
 * {
   font-family: "JetBrainsMono Nerd Font", monospace;
@@ -179,7 +173,8 @@ cat > ~/.config/waybar/style.css <<EOF
 }
 EOF
 
-echo "🔔 Writing mako config..."
+# Step 6: Mako notification config
+mkdir -p ~/.config/mako
 cat > ~/.config/mako/config <<EOF
 font=JetBrains Mono 12
 background-color=#222222
@@ -188,4 +183,12 @@ border-color=#888888
 padding=10
 EOF
 
-echo "✅ All done! Reboot now and log in using ly to enter sway!"
+# Step 7: Input method env vars
+if ! grep -q 'fcitx' ~/.profile; then
+  echo "export GTK_IM_MODULE=fcitx" >> ~/.profile
+  echo "export QT_IM_MODULE=fcitx" >> ~/.profile
+  echo "export XMODIFIERS=@im=fcitx" >> ~/.profile
+fi
+
+
+echo "✅ All done! Reboot and choose 'Sway' in LightDM to begin."
