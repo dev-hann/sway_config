@@ -31,7 +31,7 @@ cat > ~/.config/sway/config <<EOF
 set \$mod Mod4
 
 # Applications
-set \$term alacritty
+set \$term foot
 set \$menu \"wofi --show drun\"
 
 ### Startup applications
@@ -129,6 +129,9 @@ input "type:touchpad" {
   natural_scroll enabled
   tap enabled
 }
+bar {
+ swaybar_command waybar
+}
 
 EOF
 
@@ -139,6 +142,7 @@ cat > ~/.config/waybar/config <<EOF
   "layer": "top",
   "position": "top",
   "height": 30,
+  "modules-left": ["sway/workspaces"],
   "modules-center": ["clock"],
   "modules-right": ["cpu", "memory", "battery", "tray"],
 
@@ -161,6 +165,12 @@ cat > ~/.config/waybar/config <<EOF
     "format": "BAT: {capacity}%",
     "format-charging": "BAT: {capacity}%",
     "tooltip": true
+  },
+
+  "sway/workspaces": {
+    "disable-scroll": false,
+    "all-outputs": false,
+    "format": "{name}"
   }
 }
 EOF
