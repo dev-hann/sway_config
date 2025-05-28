@@ -203,4 +203,4 @@ if ! grep -q 'fcitx' ~/.profile; then
 fi
 
 
-echo "✅ All done! Reboot and choose 'Sway' in LightDM to begin."
+echo "✅ All done! Reboot"
