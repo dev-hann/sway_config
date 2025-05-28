@@ -10,7 +10,7 @@ sudo apt install -y \
   waybar wofi mako-notifier fcitx5 fcitx5-hangul \
   blueman network-manager-gnome brightnessctl \
   grim slurp wl-clipboard playerctl pavucontrol\
-  fonts-noto-cjk fonts-nanum
+  fonts-noto-cjk fonts-nanum fonts-noto-color-emoji
 
 sudo apt remove xdg-desktop-portal-gtk
 
