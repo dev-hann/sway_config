@@ -149,11 +149,13 @@ cat > ~/.config/waybar/config <<EOF
 
   "cpu": {
     "format": "CPU: {usage}%",
+    "interval":1,
     "tooltip": true
   },
 
   "memory": {
     "format": "MEM: {used:0.1f}G / {total:0.1f}G",
+    "interval":1,
     "tooltip": true
   },
 
@@ -162,6 +164,7 @@ cat > ~/.config/waybar/config <<EOF
     "format-charging": "BAT: {capacity}% ⚡",
     "format-discharging": "BAT: {capacity}% ↓",
     "format-full": "BAT: {capacity}% ✔",
+    "interval":1,
     "tooltip": true
   },
 
