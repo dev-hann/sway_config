@@ -5,7 +5,7 @@ set -e
 # Step 1: Install base packages
 sudo apt update
 sudo apt install -y \
-  sway lightdm xwayland \
+  sway xwayland \
   xdg-desktop-portal-wlr \
   waybar wofi mako-notifier fcitx5 fcitx5-hangul \
   blueman network-manager-gnome brightnessctl \
@@ -13,10 +13,6 @@ sudo apt install -y \
   fonts-noto-cjk fonts-nanum fonts-noto-color-emoji
 
 sudo apt remove xdg-desktop-portal-gtk
-
-# Step 2: Configure LightDM as default display manager
-sudo debconf-set-selections <<< "lightdm shared/default-x-display-manager select lightdm"
-sudo dpkg-reconfigure -f noninteractive lightdm
 
 # Step 3: Set up portals preference
 mkdir -p ~/.config/xdg-desktop-portal
