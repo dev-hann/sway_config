@@ -163,7 +163,9 @@ cat > ~/.config/waybar/config <<EOF
 
   "battery": {
     "format": "BAT: {capacity}%",
-    "format-charging": "BAT: {capacity}%",
+    "format-charging": "BAT: {capacity}% ⚡",
+    "format-discharging": "BAT: {capacity}% ↓",
+    "format-full": "BAT: {capacity}% ✔",
     "tooltip": true
   },
 
