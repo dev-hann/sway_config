@@ -5,11 +5,11 @@ set -e
 # Step 1: Install base packages
 sudo apt update
 sudo apt install -y \
-  sway xwayland \
+  sway xwayland foot \
   xdg-desktop-portal-wlr \
   waybar wofi mako-notifier fcitx5 fcitx5-hangul \
   blueman network-manager-gnome brightnessctl \
-  grim slurp wl-clipboard playerctl pavucontrol\
+  grim slurp wl-clipboard playerctl pavucontrol \
   fonts-noto-cjk fonts-nanum fonts-noto-color-emoji
 
 sudo apt remove xdg-desktop-portal-gtk
@@ -37,12 +37,6 @@ exec blueman-applet
 exec mako
 exec swaybg -c '#000000'
 exec fcitx5
-
-# Lock screen and power management
-exec swayidle -w \
-  timeout 300 'swaylock -f -c 000000' \
-  timeout 600 'swaymsg "output * dpms off"' \
-  resume 'swaymsg "output * dpms on"'
 
 ### Key bindings
 
